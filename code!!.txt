@@ -1,0 +1,182 @@
+THINGS TO DO
+1. Dowload 2 sounds
+	a. 'snd_shot'
+	b. 'snd_explosion' -- ?
+
+---------------------
+OBJ BARREL_EXPLOSION:
+DRAW
+
+{
+    var tex;
+    tex = sprite_get_texture(tex_barrel, image_index);
+    draw_set_alpha(1 - 0.1 * image_index)
+    d3d_draw_wall(x - 12 * global.camsin, y - 12 * global.camcos, 24, x + 12 * global.camsin, y + 12 * global.camcos, 0, tex, 1, 1);
+    draw_set_alpha(1);
+}
+
+CREATE
+
+image_speed = 0.2
+
+Set Alarm 0 = 5
+
+ALARM 0
+
+Play sound 'explosion', loop = false
+
+ANIMATION END
+
+Destroy Instance
+--
+
+OBJ BARREL:
+CREATE
+
+image_speed = 0.1
+
+DESTROY
+
+[already done]
+
+DRAW
+
+[already done]
+--
+
+OBJ GUN:
+CREATE
+
+{
+	image_speed = 0;
+	image_index = 0;
+	can_shoot = true;
+}
+
+KEYBOARD PRESS SPACE
+
+{
+	//check whether you can shoot
+	if(not can_shoot) exit;
+	can_shoot = false;
+	//show animation and play sound
+	image_speed = 0.4;
+	image_index = 0;
+	sound_play(snd_shot);
+	//determine what you hit
+	var xx, yy, ii;
+	xx = global.camx;
+	yy = global.camy;
+	repeat(50)
+	{
+		xx += 4 * global.camcos;
+		yy -= 4 * global.camsin;
+		ii = instance_position(xx, yy, obj_wall_basic);
+		if(ii == noone) continue;
+		if(ii.object_index == obj_barrel)
+			with(ii) object_destroy();
+		break;
+	}
+	
+}
+
+ANIMATION END
+
+{
+	image_speed = 0;
+	image_index = 0;
+	can_shoot = true;
+}
+
+DRAW
+
+{
+	d3d_set_projection_ortho(0, 0, 640, 480, 0);
+	d3d_set_hidden(true);
+	draw_sprite_ext(sprite_shotgun, -1, 0, 480 - 256, 2, 2, 0, c_white, 1);
+	d3d_set_hidden(true);
+}
+
+--
+
+OBJ PLAYER:
+
+KEYBOARD PRESS X-KEY
+
+[already done]
+{
+	var xn, yn;
+	xn = x + sin(direction * pi / 180);
+	yn = y + cos(direction * pi / 180);
+	//....
+}
+
+[[ ... REST IS ALREADY DONE ... ]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
